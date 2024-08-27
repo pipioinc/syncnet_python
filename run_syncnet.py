@@ -35,11 +35,17 @@ flist.sort()
 # ==================== GET OFFSETS ====================
 
 dists = []
+offsets = []
 for idx, fname in enumerate(flist):
-    offset, conf, dist = s.evaluate(opt,videofile=fname)
+    offset, conf, dist = s.evaluate(opt, videofile=fname)
     dists.append(dist)
+    offsets.append(offset)
       
 # ==================== PRINT RESULTS TO FILE ====================
 
-with open(os.path.join(opt.work_dir,opt.reference,'activesd.pckl'), 'wb') as fil:
+with open(os.path.join(opt.work_dir, opt.reference, 'activesd.pckl'), 'wb') as fil:
     pickle.dump(dists, fil)
+
+with open(os.path.join(opt.work_dir, opt.reference, 'offset.txt'), 'w') as f:
+    f.write(" ".join([str(x) for x in offsets]))
+    f.write("\n")
